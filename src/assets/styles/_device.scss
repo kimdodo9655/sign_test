@@ -1,0 +1,47 @@
+// ========================================
+// 데스크톱 변수 (기본값)
+// ========================================
+$desktop-container-max-width: none;
+$desktop-container-min-width: 1024px;
+$desktop-container-padding: 40px;
+
+$desktop-font-size-base: 16px;
+$desktop-font-size-h1: 36px;
+$desktop-font-size-h2: 28px;
+$desktop-font-size-h3: 24px;
+
+$desktop-spacing-xs: 12px;
+$desktop-spacing-sm: 16px;
+$desktop-spacing-md: 24px;
+$desktop-spacing-lg: 40px;
+$desktop-spacing-xl: 48px;
+
+$desktop-grid-columns: 3;
+$desktop-grid-gap: 24px;
+
+$desktop-nav-direction: row;
+$desktop-nav-gap: 24px;
+
+// ========================================
+// 모바일 변수
+// ========================================
+$mobile-container-max-width: 800px;
+$mobile-container-min-width: auto;
+$mobile-container-padding: 16px;
+
+$mobile-font-size-base: 14px;
+$mobile-font-size-h1: 24px;
+$mobile-font-size-h2: 20px;
+$mobile-font-size-h3: 18px;
+
+$mobile-spacing-xs: 8px;
+$mobile-spacing-sm: 12px;
+$mobile-spacing-md: 16px;
+$mobile-spacing-lg: 24px;
+$mobile-spacing-xl: 32px;
+
+$mobile-grid-columns: 1;
+$mobile-grid-gap: 16px;
+
+$mobile-nav-direction: column;
+$mobile-nav-gap: 12px;

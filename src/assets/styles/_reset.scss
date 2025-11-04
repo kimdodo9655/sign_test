@@ -1,0 +1,170 @@
+@use "@/assets/styles/variables" as *;
+@use "@/assets/styles/device" as *;
+@use "@/assets/styles/mixins" as *;
+@use "@/assets/styles/typography" as *;
+
+/* ***********************************
+ * SCSS Reset & Base Styles
+ * 브라우저 기본 스타일 초기화 및 기본 설정
+ *********************************** */
+
+// 기본 리셋 스타일
+%reset-base {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  @include font-regular;
+}
+
+/* 모든 요소 기본 리셋 */
+*,
+*::before,
+*::after {
+  @extend %reset-base;
+}
+
+/* HTML 요소별 상세 리셋 (레거시 브라우저 호환성) */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML, Body 기본 설정 + 모던 CSS 기능 */
+html {
+  overflow-y: scroll; // 스크롤바 항상 표시로 레이아웃 깜빡임 방지
+  scroll-behavior: smooth; // 부드러운 스크롤
+  -webkit-text-size-adjust: 100%; // iOS Safari 텍스트 크기 조정 방지
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  line-height: 1; // 텍스트 줄간격 통일
+  background-color: #ffffff;
+}
+
+/* 리스트 스타일 제거 */
+ol,
+ul {
+  list-style: none;
+}
+
+/* 인용부호 제거 */
+blockquote,
+q {
+  quotes: none;
+
+  &:before,
+  &:after {
+    content: "";
+    content: none;
+  }
+}
+
+/* 테이블 경계선 설정 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 폼 요소 폰트 상속 */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* 포커스 링 개선 */
+*:focus-visible {
+  outline: 2px solid #666666;
+  outline-offset: 2px;
+}
+
+/* 텍스트 선택 시 스타일 */
+::selection {
+  background: #666666;
+  color: #ffffff;
+}
+
+/* Firefox 호환 */
+::-moz-selection {
+  background: #666666;
+  color: #ffffff;
+}
+
+/* ***********************************
+ * 접근성 고려 - 애니메이션 최소화 설정
+ *********************************** */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

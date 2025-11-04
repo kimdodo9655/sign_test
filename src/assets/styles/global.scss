@@ -1,0 +1,183 @@
+@use "@/assets/styles/variables" as *;
+@use "@/assets/styles/device" as *;
+@use "@/assets/styles/mixins" as *;
+@use "@/assets/styles/typography" as *;
+
+@use "@/assets/styles/reset";
+
+@use "sass:math";
+
+// ========================================
+// 기기별 컨테이너 설정
+// ========================================
+.app-root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+// 데스크톱 (기본값)
+.app-root[data-device="desktop"] .app-container {
+  min-width: $desktop-container-min-width;
+  max-width: $desktop-container-max-width;
+}
+
+// 모바일
+.app-root[data-device="mobile"] .app-container {
+  min-width: $mobile-container-min-width;
+  max-width: $mobile-container-max-width;
+}
+
+// 폴백 (data-device 속성 없을 때 기본값 = 데스크톱)
+.app-root:not([data-device]) .app-container,
+.app-root[data-device=""] .app-container {
+  min-width: $desktop-container-min-width;
+  max-width: $desktop-container-max-width;
+}
+
+/* ***********************************
+* SCSS FUNCTION
+* *********************************** */
+@function fluid-size($max-size, $min-viewport: 1024px, $max-viewport: 1400px) {
+  $min-size: $max-size * math.div($min-viewport, $max-viewport);
+  $vw-value: math.div($max-size, $max-viewport) * 100vw;
+
+  @return min(max(#{$min-size}, #{$vw-value}), #{$max-size});
+}
+
+/* ***********************************
+* MAIN HEADER
+* *********************************** */
+.main-header {
+  // 공통 styles
+  background: linear-gradient(to bottom, #e9e9e9 50%, transparent 80%);
+  @include desktop {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    min-width: 1024px;
+    height: fluid-size(160px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+
+    .header-inner {
+      position: relative;
+      width: clamp(1024px, 100vw, 1400px);
+      height: fluid-size(80px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: fluid-size(40px);
+      z-index: 1;
+
+      // 의사요소로 좌우 장식 확장
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: fluid-size(-40px);
+        right: fluid-size(-40px);
+        height: fluid-size(80px);
+        background-color: #fff;
+        border-radius: fluid-size(40px);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        z-index: -1;
+      }
+
+      img {
+        height: fluid-size(26px);
+        margin-left: fluid-size(40px);
+      }
+
+      nav > ul {
+        display: flex;
+        gap: fluid-size(60px);
+        margin-right: fluid-size(40px);
+
+        li {
+          font-size: fluid-size(18px);
+          font-weight: 600;
+          color: $color-text-primary;
+          cursor: pointer;
+
+          &.active {
+            color: $color-emphasis;
+          }
+        }
+      }
+    }
+  }
+
+  @include mobile {
+  }
+}
+
+/* ***********************************
+* MAIN FOOTER
+* *********************************** */
+.main-footer {
+  // 공통 styles
+  width: 100%;
+  min-width: 1024px;
+  height: auto;
+
+  @include desktop {
+    padding: 60px 0 80px 0;
+    background-color: #333333;
+
+    .footer-inner {
+      position: relative;
+      width: min(max(1024px, 100vw), 1400px); // 1024px→1024px, 1400px→1400px
+      margin: auto;
+
+      img {
+        height: 30px;
+      }
+
+      > ul {
+        li {
+          color: #999999;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 160px 0 40px 0;
+    background-color: #e7e7e7;
+
+    .footer-inner {
+      width: calc(100% - 40px);
+      margin: 0 20px;
+
+      img {
+        height: 30px;
+        margin-bottom: 30px;
+      }
+
+      > ul {
+        li {
+          font-size: 11px;
+          color: #999999;
+          margin-bottom: 5px;
+        }
+      }
+
+      > p {
+        font-size: 11px;
+        color: #999999;
+      }
+    }
+  }
+}
+
+.app-container section {
+  min-height: 500px;
+  border: 10px solid #999;
+}

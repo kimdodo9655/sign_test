@@ -1,0 +1,69 @@
+// ========================================
+// 컬러
+// ========================================
+$color-emphasis: #33cccc;
+$color-primary: #667eea;
+$color-secondary: #764ba2;
+$color-danger: #f5576c;
+$color-success: #4caf50;
+$color-warning: #ff9800;
+
+$color-text-primary: #333;
+$color-text-secondary: #666;
+$color-text-light: #999;
+
+$color-bg-primary: #e7e7e7;
+$color-bg-secondary: #f5f5f5;
+$color-border: #ddd;
+
+// ========================================
+// 타이포그래피
+// ========================================
+$font-family-pretendard: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-extrabold: 800;
+
+// ========================================
+// 간격
+// ========================================
+$spacing-pc-xs: 8px;
+$spacing-pc-sm: 12px;
+$spacing-pc-md: 16px;
+$spacing-pc-lg: 24px;
+$spacing-pc-xl: 40px;
+$spacing-pc-2xl: 48px;
+
+$spacing-mob-xs: 8px;
+$spacing-mob-sm: 12px;
+$spacing-mob-md: 16px;
+$spacing-mob-lg: 24px;
+$spacing-mob-xl: 40px;
+$spacing-mob-2xl: 48px;
+
+// ========================================
+// 레이아웃
+// ========================================
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-full: 50%;
+
+$shadow-base: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// ========================================
+// 트랜지션
+// ========================================
+$transition-fast: 0.15s;
+$transition-base: 0.3s;
+$transition-slow: 0.5s;
+$transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// ========================================
+// Z-Index
+// ========================================
+$z-index-dropdown: 1000;
+$z-index-modal: 2000;
+$z-index-tooltip: 3000;
+$z-index-dev-tool: 9999;

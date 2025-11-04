@@ -1,0 +1,110 @@
+@use "@/assets/styles/variables" as *;
+@use "@/assets/styles/device" as *;
+
+// ========================================
+// 기기별 스타일 믹스인
+// ========================================
+@mixin desktop {
+  [data-device="desktop"] & {
+    @content;
+  }
+}
+
+@mixin mobile {
+  [data-device="mobile"] & {
+    @content;
+  }
+}
+
+// ========================================
+// 반응형 속성 믹스인
+// ========================================
+@mixin responsive-padding {
+  @include desktop {
+    padding: $desktop-container-padding;
+  }
+
+  @include mobile {
+    padding: $mobile-container-padding;
+  }
+}
+
+@mixin responsive-font-size($desktop-size, $mobile-size) {
+  @include desktop {
+    font-size: $desktop-size;
+  }
+
+  @include mobile {
+    font-size: $mobile-size;
+  }
+}
+
+@mixin responsive-spacing($property, $desktop-value, $mobile-value) {
+  @include desktop {
+    #{$property}: $desktop-value;
+  }
+
+  @include mobile {
+    #{$property}: $mobile-value;
+  }
+}
+
+@mixin responsive-grid {
+  display: grid;
+
+  @include desktop {
+    grid-template-columns: repeat($desktop-grid-columns, 1fr);
+    gap: $desktop-grid-gap;
+  }
+
+  @include mobile {
+    grid-template-columns: repeat($mobile-grid-columns, 1fr);
+    gap: $mobile-grid-gap;
+  }
+}
+
+// ========================================
+// 유틸리티 믹스인
+// ========================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button-base {
+  padding: 10px 20px;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all $transition-base $transition-timing;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin card-base {
+  background: $color-bg-primary;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-pc-lg;
+  box-shadow: $shadow-base;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-base;
+    transform: translateY(-2px);
+  }
+}
