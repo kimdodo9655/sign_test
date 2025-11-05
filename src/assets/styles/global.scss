@@ -54,7 +54,7 @@
 * *********************************** */
 .main-header {
   // 공통 styles
-  background: linear-gradient(to bottom, #e9e9e9 50%, transparent 80%);
+  background: linear-gradient(to bottom, #e9e9e9 60%, transparent 80%);
   @include desktop {
     position: sticky;
     top: 0;
@@ -109,6 +109,88 @@
           &.active {
             color: $color-emphasis;
           }
+        }
+      }
+
+      .auth-btn-list {
+        display: flex;
+        gap: fluid-size(40px);
+        margin-right: fluid-size(40px);
+
+        li {
+          display: flex;
+          align-items: center;
+
+          .icon-bg {
+            height: fluid-size(34px);
+            background-color: $color-emphasis;
+            border-radius: fluid-size(5px) 0 0 fluid-size(5px);
+            padding: fluid-size(8px) fluid-size(12px) fluid-size(2px) fluid-size(12px);
+            svg {
+              height: fluid-size(20px);
+              fill: #fff;
+            }
+          }
+
+          p {
+            height: fluid-size(34px);
+            line-height: fluid-size(31px);
+            font-size: fluid-size(16px);
+            padding: 0 fluid-size(10px);
+            color: $color-emphasis;
+            font-weight: 600;
+            border-top: 2px solid $color-emphasis;
+            border-bottom: 2px solid $color-emphasis;
+          }
+
+          button {
+            padding: 0 fluid-size(20px);
+            height: fluid-size(26px);
+            font-size: fluid-size(16px);
+            height: fluid-size(34px);
+            padding: 0 fluid-size(15px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &.time-btn {
+              background-color: $color-emphasis;
+              color: #fff;
+              border-radius: 0 fluid-size(5px) fluid-size(5px) 0;
+            }
+
+            &.logout-btn {
+              background-color: transparent;
+              border-radius: fluid-size(5px);
+              border: 2px solid $color-border;
+              color: $color-text-light;
+
+              &:hover {
+                border: 2px solid $color-emphasis;
+                color: $color-emphasis;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // 현재 경로가 '/help'일 경우
+    .help-header {
+      justify-content: flex-start;
+      svg {
+        height: fluid-size(26px);
+        margin-left: fluid-size(40px);
+        fill: $color-emphasis;
+      }
+
+      p {
+        font-size: fluid-size(18px);
+        margin-left: fluid-size(10px);
+        font-weight: 600;
+
+        span {
+          color: $color-emphasis;
         }
       }
     }
