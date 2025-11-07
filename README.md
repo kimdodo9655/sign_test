@@ -237,3 +237,193 @@ sign-front_local
 └─ vite.config.ts
 
 ```
+```
+sign-front_local
+├─ README.md
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+│  ├─ favicon
+│  │  ├─ android-icon-144x144.png
+│  │  ├─ android-icon-192x192.png
+│  │  ├─ android-icon-36x36.png
+│  │  ├─ android-icon-48x48.png
+│  │  ├─ android-icon-72x72.png
+│  │  ├─ android-icon-96x96.png
+│  │  ├─ apple-icon-114x114.png
+│  │  ├─ apple-icon-120x120.png
+│  │  ├─ apple-icon-144x144.png
+│  │  ├─ apple-icon-152x152.png
+│  │  ├─ apple-icon-180x180.png
+│  │  ├─ apple-icon-57x57.png
+│  │  ├─ apple-icon-60x60.png
+│  │  ├─ apple-icon-72x72.png
+│  │  ├─ apple-icon-76x76.png
+│  │  ├─ apple-icon-precomposed.png
+│  │  ├─ apple-icon.png
+│  │  ├─ browserconfig.xml
+│  │  ├─ favicon-16x16.png
+│  │  ├─ favicon-32x32.png
+│  │  ├─ favicon-96x96.png
+│  │  ├─ favicon.ico
+│  │  ├─ manifest.json
+│  │  ├─ ms-icon-144x144.png
+│  │  ├─ ms-icon-150x150.png
+│  │  ├─ ms-icon-310x310.png
+│  │  └─ ms-icon-70x70.png
+│  ├─ fonts
+│  │  └─ pretendard
+│  │     ├─ LICENSE.txt
+│  │     ├─ woff
+│  │     │  ├─ Pretendard-ExtraBold.woff
+│  │     │  ├─ Pretendard-Light.woff
+│  │     │  ├─ Pretendard-Regular.woff
+│  │     │  └─ Pretendard-SemiBold.woff
+│  │     └─ woff2
+│  │        ├─ Pretendard-ExtraBold.woff2
+│  │        ├─ Pretendard-Light.woff2
+│  │        ├─ Pretendard-Regular.woff2
+│  │        └─ Pretendard-SemiBold.woff2
+│  └─ pdf
+│     └─ pdf.pdf
+├─ src
+│  ├─ App.vue
+│  ├─ api
+│  │  ├─ client.ts
+│  │  ├─ index.ts
+│  │  ├─ services.ts
+│  │  └─ types.ts
+│  ├─ assets
+│  │  ├─ font
+│  │  │  ├─ NotoSansKR-Regular.ttf
+│  │  │  ├─ NotoSansKR-SemiBold.ttf
+│  │  │  └─ OneMobileTitle.ttf
+│  │  ├─ images
+│  │  │  ├─ icons
+│  │  │  │  ├─ flaticon
+│  │  │  │  │  ├─ json
+│  │  │  │  │  │  ├─ agreement.json
+│  │  │  │  │  │  ├─ database-security.json
+│  │  │  │  │  │  ├─ edit.json
+│  │  │  │  │  │  ├─ faq.json
+│  │  │  │  │  │  ├─ form.json
+│  │  │  │  │  │  ├─ settings.json
+│  │  │  │  │  │  └─ strategy.json
+│  │  │  │  │  └─ svg
+│  │  │  │  │     ├─ 30-days.svg
+│  │  │  │  │     ├─ agreement.svg
+│  │  │  │  │     ├─ alarm-clock.svg
+│  │  │  │  │     ├─ clock.svg
+│  │  │  │  │     ├─ computer-error.svg
+│  │  │  │  │     ├─ computer.svg
+│  │  │  │  │     ├─ database-security.svg
+│  │  │  │  │     ├─ edit.svg
+│  │  │  │  │     ├─ email.svg
+│  │  │  │  │     ├─ error-404.svg
+│  │  │  │  │     ├─ faq.svg
+│  │  │  │  │     ├─ files.svg
+│  │  │  │  │     ├─ form.svg
+│  │  │  │  │     ├─ logout.svg
+│  │  │  │  │     ├─ midnight.svg
+│  │  │  │  │     ├─ question.svg
+│  │  │  │  │     ├─ settings.svg
+│  │  │  │  │     ├─ shield.svg
+│  │  │  │  │     ├─ strategy.svg
+│  │  │  │  │     ├─ telephone-call.svg
+│  │  │  │  │     └─ verified.svg
+│  │  │  │  └─ iconoir
+│  │  │  │     └─ svg
+│  │  │  │        ├─ arrow-down-circle.svg
+│  │  │  │        ├─ arrow-left.svg
+│  │  │  │        ├─ arrow-up-circle.svg
+│  │  │  │        ├─ check-circle-solid.svg
+│  │  │  │        ├─ circle.svg
+│  │  │  │        ├─ expand.svg
+│  │  │  │        ├─ fast-arrow-right.svg
+│  │  │  │        ├─ floppy-disk.svg
+│  │  │  │        ├─ info-circle-solid.svg
+│  │  │  │        ├─ minus-circle.svg
+│  │  │  │        ├─ page-down.svg
+│  │  │  │        ├─ page-up.svg
+│  │  │  │        ├─ plus-circle.svg
+│  │  │  │        ├─ refresh-double.svg
+│  │  │  │        ├─ view-columns2.svg
+│  │  │  │        └─ xmark.svg
+│  │  │  └─ logo
+│  │  │     ├─ bankclear_logo.png
+│  │  │     ├─ bankclear_logo_bk.png
+│  │  │     ├─ bankclear_logo_gray.png
+│  │  │     └─ test_bank_logo.png
+│  │  └─ styles
+│  │     ├─ _device.scss
+│  │     ├─ _mixins.scss
+│  │     ├─ _reset.scss
+│  │     ├─ _typography.scss
+│  │     ├─ _variables.scss
+│  │     └─ global.scss
+│  ├─ components
+│  │  ├─ dev
+│  │  │  ├─ ApiTester.vue
+│  │  │  └─ DeviceTestController.vue
+│  │  ├─ layout
+│  │  │  ├─ AppFooter.vue
+│  │  │  ├─ AppHeader.vue
+│  │  │  ├─ DevBanner.vue
+│  │  │  └─ OverlayScrollbar.vue
+│  │  ├─ pre-auth
+│  │  │  ├─ SecCertification.vue
+│  │  │  ├─ SecGuide.vue
+│  │  │  ├─ SecHelp.vue
+│  │  │  ├─ SecInstall.vue
+│  │  │  ├─ SecMobSubNav.vue
+│  │  │  ├─ SecSupport.vue
+│  │  │  └─ SecVerification.vue
+│  │  ├─ signature-list
+│  │  └─ ui
+│  │     ├─ AlertModal.vue
+│  │     ├─ ConfirmModal.vue
+│  │     ├─ LoadingOverlay.vue
+│  │     └─ ToastList.vue
+│  ├─ composables
+│  │  ├─ useAuth.ts
+│  │  ├─ useDevice.ts
+│  │  ├─ useDeviceDetection.ts
+│  │  ├─ useNavigation.ts
+│  │  ├─ usePerformance.ts
+│  │  ├─ useScrollNavigation.ts
+│  │  └─ useUI.ts
+│  ├─ config
+│  │  └─ environment.ts
+│  ├─ contents
+│  │  ├─ apiEndpoints.ts
+│  │  ├─ errorCodes.ts
+│  │  ├─ httpStatus.ts
+│  │  └─ index.ts
+│  ├─ main.ts
+│  ├─ router
+│  │  └─ index.ts
+│  ├─ stores
+│  │  ├─ auth.ts
+│  │  └─ ui.ts
+│  ├─ types
+│  │  ├─ components.ts
+│  │  ├─ env.d.ts
+│  │  ├─ pdf-vue3.d.ts
+│  │  └─ utils.ts
+│  ├─ utils
+│  │  ├─ apiHelpers.ts
+│  │  ├─ env.ts
+│  │  └─ performance.ts
+│  ├─ views
+│  │  ├─ AboutView.vue
+│  │  ├─ HomeView.vue
+│  │  ├─ NotFoundView.vue
+│  │  └─ PreAuthView.vue
+│  └─ vite-env.d.ts
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.node.json
+└─ vite.config.ts
+
+```

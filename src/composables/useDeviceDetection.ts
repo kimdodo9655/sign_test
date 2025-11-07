@@ -10,7 +10,7 @@ const DEFAULT_DEVICE_TYPE: DeviceType = "desktop";
 const deviceType = ref<DeviceType>(DEFAULT_DEVICE_TYPE);
 const isDevMode = ref<boolean>(false);
 
-// Mac 여부 감지 (추가)
+// Mac 여부 감지
 const isMacOS = (): boolean => {
   if (typeof window === "undefined" || typeof navigator === "undefined") {
     return false;
@@ -132,7 +132,7 @@ export function useDeviceDetection() {
     realDeviceType,
     isMobile: () => deviceType.value === "mobile",
     isDesktop: () => deviceType.value === "desktop",
-    isMac: isMacOS, // ✅ Mac 여부 판별 함수 추가
+    isMac: isMacOS,
     toggleDevice,
     resetToRealDevice,
   };

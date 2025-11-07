@@ -261,7 +261,7 @@
 
     .footer-inner {
       position: relative;
-      width: min(max(1024px, 100vw), 1400px); // 1024px→1024px, 1400px→1400px
+      width: clamp(1024px, 100vw, 1400px);
       margin: auto;
 
       * {
