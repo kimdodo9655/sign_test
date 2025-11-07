@@ -4,8 +4,8 @@
       <img src="@/assets/images/logo/test_bank_logo.png" alt="logo" />
 
       <!-- 로그인 전 -->
-      <nav v-if="false">
-        <ul>
+      <nav v-if="true">
+        <ul v-if="isDesktop()">
           <li v-for="(menu, index) in menus" :key="index" :class="{ active: activeIndex === index }" @click="scrollToSection(index)">
             {{ menu }}
           </li>
@@ -13,20 +13,20 @@
       </nav>
 
       <!-- 로그인 후 -->
-      <ul class="auth-btn-list" v-if="true">
+      <ul class="auth-btn-list" v-if="false">
         <li>
+          <button class="logout-btn">로그아웃</button>
+        </li>
+        <li v-if="isDesktop()">
           <div class="icon-bg"><IconTime /></div>
           <p>00:00</p>
           <button class="time-btn">연장</button>
-        </li>
-        <li>
-          <button class="logout-btn">로그아웃</button>
         </li>
       </ul>
     </div>
 
     <!-- 현재 경로가 '/help'일 경우 -->
-    <div v-if="isHelpPage" class="header-inner help-header">
+    <div v-if="isHelpPage && isDesktop()" class="header-inner help-header">
       <IconHelp />
       <p>
         전자서명
@@ -43,6 +43,10 @@ import { useScrollNavigation } from "@/composables/useScrollNavigation";
 
 import IconHelp from "@/assets/images/icons/flaticon/svg/question.svg";
 import IconTime from "@/assets/images/icons/flaticon/svg/alarm-clock.svg";
+
+import { useDevice } from "@/composables/useDevice";
+
+const { isDesktop } = useDevice();
 
 const menus = ["본인확인", "진행방법", "프로그램 설치", "공동인증센터", "도움말", "고객센터"];
 const { activeIndex, scrollToSection } = useScrollNavigation();

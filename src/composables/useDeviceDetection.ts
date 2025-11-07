@@ -10,6 +10,23 @@ const DEFAULT_DEVICE_TYPE: DeviceType = "desktop";
 const deviceType = ref<DeviceType>(DEFAULT_DEVICE_TYPE);
 const isDevMode = ref<boolean>(false);
 
+// Mac 여부 감지 (추가)
+const isMacOS = (): boolean => {
+  if (typeof window === "undefined" || typeof navigator === "undefined") {
+    return false;
+  }
+
+  try {
+    const platform = navigator.platform.toLowerCase();
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    return /mac/.test(platform) || /macintosh/.test(userAgent);
+  } catch (error) {
+    console.warn("Mac detection failed:", error);
+    return false;
+  }
+};
+
 // 실제 기기 감지
 const detectRealDevice = (): DeviceType => {
   if (typeof window === "undefined" || typeof navigator === "undefined") {
@@ -61,6 +78,7 @@ const initialize = () => {
     if (import.meta.env.DEV) {
       console.log("🔍 Device initialized:", {
         deviceType: deviceType.value,
+        isMac: isMacOS(),
         isDevMode: isDevMode.value,
         realDevice: detectRealDevice(),
       });
@@ -79,7 +97,7 @@ export function useDeviceDetection() {
     try {
       const newDevice: DeviceType = deviceType.value === "mobile" ? "desktop" : "mobile";
       localStorage.setItem(STORAGE_KEY, newDevice);
-      deviceType.value = newDevice; // 🔥 전역 ref 업데이트
+      deviceType.value = newDevice;
       isDevMode.value = true;
 
       // 개발 환경에서 로그 출력
@@ -109,11 +127,12 @@ export function useDeviceDetection() {
   };
 
   return {
-    deviceType, // ✅ 전역 ref 반환
+    deviceType,
     isDevMode,
     realDeviceType,
     isMobile: () => deviceType.value === "mobile",
     isDesktop: () => deviceType.value === "desktop",
+    isMac: isMacOS, // ✅ Mac 여부 판별 함수 추가
     toggleDevice,
     resetToRealDevice,
   };

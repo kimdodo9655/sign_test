@@ -10,7 +10,7 @@
       <SecHelp />
       <SecSupport />
 
-      <SecMobSubNav v-if="deviceType === 'mobile'" class="mob-sub-nav" />
+      <SecMobSubNav v-if="isMobile()" class="mob-sub-nav" />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ import SecHelp from "@/components/pre-auth/SecHelp.vue";
 import SecSupport from "@/components/pre-auth/SecSupport.vue";
 import SecMobSubNav from "@/components/pre-auth/SecMobSubNav.vue";
 
-import { useDeviceDetection } from "@/composables/useDeviceDetection";
+import { useDevice } from "@/composables/useDevice";
 
-const { deviceType } = useDeviceDetection();
+const { isMobile } = useDevice();
 </script>

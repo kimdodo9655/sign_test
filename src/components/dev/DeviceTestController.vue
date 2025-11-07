@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useDeviceDetection } from "@/composables/useDeviceDetection";
+import { useDevice } from "@/composables/useDevice";
 
-const { deviceType, isDevMode, realDeviceType, toggleDevice, resetToRealDevice } = useDeviceDetection();
+const { deviceType, isDevMode, realDeviceType, isMac, toggleDevice, resetToRealDevice } = useDevice();
 
 const isExpanded = ref(false);
 
@@ -40,6 +40,13 @@ const isDevelopment = import.meta.env.DEV;
               <span class="info__label">실제 기기:</span>
               <span class="info__value info__value--real">
                 {{ realDeviceType === "mobile" ? "📱 모바일" : "💻 데스크톱" }}
+              </span>
+            </div>
+
+            <div class="info__row">
+              <span class="info__label">Mac 여부:</span>
+              <span class="info__value" :class="isMac() ? 'info__value--mac' : 'info__value--not-mac'">
+                {{ isMac() ? "🍎 Mac" : "🪟/Windows/Linux" }}
               </span>
             </div>
           </div>
@@ -261,6 +268,16 @@ $panel-width-mobile: 260px;
     &--real {
       background: #e8f5e9;
       color: #388e3c;
+    }
+
+    &--mac {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    &--not-mac {
+      background: #e3f2fd;
+      color: #1976d2;
     }
   }
 }
