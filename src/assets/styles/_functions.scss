@@ -58,91 +58,12 @@
   @return math.div($part, $whole) * 100%;
 }
 
-/**
- * px 값을 rem으로 변환합니다.
- * 
- * @param {Number} $px - 픽셀 값
- * @param {Number} $base - 기본 폰트 크기 (기본값: 16px)
- * @return {Number} - rem 값
- * 
- * @example
- *   font-size: px-to-rem(24px);
- *   // 결과: 1.5rem
- */
-@function px-to-rem($px, $base: 16px) {
-  @return math.div($px, $base) * 1rem;
-}
-
-/**
- * rem 값을 px로 변환합니다.
- * 
- * @param {Number} $rem - rem 값
- * @param {Number} $base - 기본 폰트 크기 (기본값: 16px)
- * @return {Number} - px 값
- * 
- * @example
- *   width: rem-to-px(2rem);
- *   // 결과: 32px
- */
-@function rem-to-px($rem, $base: 16px) {
-  $value: math.div($rem, 1rem);
-  @return $value * $base;
-}
-
 /* ***********************************
- * USAGE EXAMPLES
- * *********************************** */
+* (구) SCSS FUNCTION
+* *********************************** */
+// @function fluid-size($max-size, $min-viewport: 1024px, $max-viewport: 1400px) {
+//   $min-size: $max-size * math.div($min-viewport, $max-viewport);
+//   $vw-value: math.div($max-size, $max-viewport) * 100vw;
 
-/*
-// 1. 타이포그래피
-h1 {
-  font-size: fluid-size(56px);
-}
-
-h2 {
-  font-size: fluid-size(40px);
-}
-
-p {
-  font-size: fluid-size(18px);
-}
-
-// 2. 간격 (Spacing)
-.section {
-  padding: fluid-size(120px) 0;
-  margin-bottom: fluid-size(80px);
-}
-
-.card {
-  gap: fluid-size(32px);
-  padding: fluid-size(40px);
-}
-
-// 3. 레이아웃
-.container {
-  width: fluid-size(1400px);
-  margin: 0 auto;
-}
-
-.grid-container {
-  width: fluid-size(1400px);
-  display: grid;
-  grid-template-columns: 390fr 990fr;  // 비율 유지
-  gap: fluid-size(20px);
-}
-
-// 4. 비율 계산 헬퍼
-.sidebar {
-  width: calculate-ratio(390px, 1400px);  // 27.857%
-}
-
-.main {
-  width: calculate-ratio(990px, 1400px);  // 70.714%
-}
-
-// 5. 단위 변환
-.text {
-  font-size: px-to-rem(18px);  // 1.125rem
-  margin-bottom: px-to-rem(24px);  // 1.5rem
-}
-*/
+//   @return min(max(#{$min-size}, #{$vw-value}), #{$max-size});
+// }

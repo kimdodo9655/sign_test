@@ -1,3 +1,5 @@
+<!-- src/components/layout/DevBanner.vue -->
+
 <template>
   <div class="dev-banner">
     {{ devBannerText }}

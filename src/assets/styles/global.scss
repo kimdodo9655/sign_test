@@ -2,64 +2,67 @@
 @use "@/assets/styles/device" as *;
 @use "@/assets/styles/mixins" as *;
 @use "@/assets/styles/typography" as *;
-
+@use "@/assets/styles/functions" as *;
 @use "@/assets/styles/reset";
-
 @use "sass:math";
 
 // ========================================
-// 기기별 컨테이너 설정
+// App Root & Container
 // ========================================
 .app-root {
   width: 100%;
   min-height: 100vh;
+
+  // 데스크톱 환경에서만 최소 너비 설정
+  &[data-device="desktop"],
+  &:not([data-device]),
+  &[data-device=""] {
+    min-width: 1024px;
+  }
 }
 
 .app-container {
   width: 100%;
   margin: 0 auto;
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 
-// 데스크톱 (기본값)
-.app-root[data-device="desktop"] .app-container {
-  min-width: $desktop-container-min-width;
-  max-width: $desktop-container-max-width;
+// Desktop Container (기본값 및 폴백)
+.app-root[data-device="desktop"],
+.app-root:not([data-device]),
+.app-root[data-device=""] {
+  .app-container {
+    min-width: $desktop-container-min-width;
+    max-width: $desktop-container-max-width;
+    min-height: calc(100vh - fluid-size(160px));
+  }
 }
 
-// 모바일
+// Mobile Container
 .app-root[data-device="mobile"] .app-container {
   min-width: $mobile-container-min-width;
   max-width: $mobile-container-max-width;
+  min-height: calc(100vh - 60px);
 }
 
-// 폴백 (data-device 속성 없을 때 기본값 = 데스크톱)
-.app-root:not([data-device]) .app-container,
-.app-root[data-device=""] .app-container {
-  min-width: $desktop-container-min-width;
-  max-width: $desktop-container-max-width;
-}
-
-/* ***********************************
-* SCSS FUNCTION
-* *********************************** */
-@function fluid-size($max-size, $min-viewport: 1024px, $max-viewport: 1400px) {
-  $min-size: $max-size * math.div($min-viewport, $max-viewport);
-  $vw-value: math.div($max-size, $max-viewport) * 100vw;
-
-  @return min(max(#{$min-size}, #{$vw-value}), #{$max-size});
-}
-
-/* ***********************************
-* MAIN HEADER
-* *********************************** */
+// ========================================
+// Main Header
+// ========================================
 .main-header {
-  // 공통 styles
-  background: linear-gradient(to bottom, #e9e9e9 60%, transparent 80%);
+  background: linear-gradient(to bottom, $color-bg-primary 60%, transparent 80%);
+  z-index: $z-index-header;
+
   @include desktop {
     position: sticky;
     top: 0;
     width: 100%;
     min-width: 1024px;
+    min-width: fluid-size(1024px);
     height: fluid-size(160px);
     display: flex;
     align-items: flex-start;
@@ -68,7 +71,7 @@
 
     .header-inner {
       position: relative;
-      width: clamp(1024px, 100vw, 1400px);
+      width: clamp(1024px, 100%, 1400px);
       height: fluid-size(80px);
       display: flex;
       align-items: center;
@@ -76,7 +79,7 @@
       margin-top: fluid-size(40px);
       z-index: 1;
 
-      // 의사요소로 좌우 장식 확장
+      // 배경 확장 효과
       &::before {
         content: "";
         position: absolute;
@@ -84,9 +87,9 @@
         left: fluid-size(-40px);
         right: fluid-size(-40px);
         height: fluid-size(80px);
-        background-color: #fff;
+        background-color: $color-white;
         border-radius: fluid-size(40px);
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        box-shadow: $shadow-base;
         z-index: -1;
       }
 
@@ -95,6 +98,7 @@
         margin-left: fluid-size(40px);
       }
 
+      // 네비게이션
       nav > ul {
         display: flex;
         gap: fluid-size(60px);
@@ -112,6 +116,7 @@
         }
       }
 
+      // 인증 버튼 영역
       .auth-btn-list {
         display: flex;
         gap: fluid-size(40px);
@@ -126,9 +131,10 @@
             background-color: $color-emphasis;
             border-radius: fluid-size(5px) 0 0 fluid-size(5px);
             padding: fluid-size(8px) fluid-size(12px) fluid-size(2px) fluid-size(12px);
+
             svg {
               height: fluid-size(20px);
-              fill: #fff;
+              fill: $color-white;
             }
           }
 
@@ -144,18 +150,16 @@
           }
 
           button {
-            padding: 0 fluid-size(20px);
-            height: fluid-size(26px);
-            font-size: fluid-size(16px);
             height: fluid-size(34px);
             padding: 0 fluid-size(15px);
+            font-size: fluid-size(16px);
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
 
             &.time-btn {
               background-color: $color-emphasis;
-              color: #fff;
+              color: $color-white;
               border-radius: 0 fluid-size(5px) fluid-size(5px) 0;
             }
 
@@ -166,7 +170,7 @@
               color: $color-text-light;
 
               &:hover {
-                border: 2px solid $color-emphasis;
+                border-color: $color-emphasis;
                 color: $color-emphasis;
               }
             }
@@ -175,9 +179,10 @@
       }
     }
 
-    // 현재 경로가 '/help'일 경우
+    // Help 페이지 헤더
     .help-header {
       justify-content: flex-start;
+
       svg {
         height: fluid-size(26px);
         margin-left: fluid-size(40px);
@@ -210,7 +215,7 @@
       align-items: center;
       justify-content: space-between;
       z-index: 1;
-      background-color: #fff;
+      background-color: $color-white;
 
       img {
         height: 15px;
@@ -225,20 +230,17 @@
           display: flex;
           align-items: center;
 
-          button {
+          button.logout-btn {
             padding: 0 15px;
-            font-size: 12px;
             height: 28px;
+            font-size: 12px;
             font-weight: 600;
+            background-color: transparent;
+            border-radius: 7px;
+            border: 2px solid $color-border;
+            color: $color-text-light;
             cursor: pointer;
             transition: 0.3s;
-
-            &.logout-btn {
-              background-color: transparent;
-              border-radius: 7px;
-              border: 2px solid $color-border;
-              color: $color-text-light;
-            }
           }
         }
       }
@@ -246,26 +248,25 @@
   }
 }
 
-/* ***********************************
-* MAIN FOOTER
-* *********************************** */
+// ========================================
+// Main Footer
+// ========================================
 .main-footer {
-  // 공통 styles
   width: 100%;
   height: auto;
 
   @include desktop {
-    min-width: 1024px;
-    padding: 80px 0;
-    background-color: #333333;
+    min-width: fluid-size(1024px);
+    padding: fluid-size(80px) 0;
+    background-color: $color-text-primary;
 
     .footer-inner {
       position: relative;
-      width: clamp(1024px, 100vw, 1400px);
+      width: clamp(1024px, 100%, 1400px);
       margin: auto;
 
       * {
-        font-size: 14px;
+        font-size: fluid-size(14px);
         color: $color-text-light;
       }
 
@@ -277,13 +278,13 @@
       > ul {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px 0;
-        margin-bottom: 25px;
+        gap: fluid-size(8px) 0;
+        margin-bottom: fluid-size(25px);
 
         li {
           &::after {
             content: "|";
-            margin: 0 15px;
+            margin: 0 fluid-size(15px);
           }
 
           &:nth-child(4)::after,
@@ -291,7 +292,7 @@
             content: none;
           }
 
-          // ✅ 줄바꿈 요소
+          // 줄바꿈 요소
           &.flex-break {
             flex-basis: 100%;
             height: 0;
@@ -306,7 +307,7 @@
       }
 
       > p {
-        margin-bottom: 60px;
+        margin-bottom: fluid-size(60px);
       }
 
       .footer-bottom {
@@ -316,12 +317,12 @@
 
         > ul {
           display: flex;
-          gap: 40px;
+          gap: fluid-size(40px);
 
           > li {
             font-weight: 600;
-            transition: 0.3s;
             cursor: pointer;
+            transition: 0.3s;
 
             &:hover {
               color: $color-emphasis;
@@ -333,8 +334,8 @@
   }
 
   @include mobile {
-    padding: 160px 0 40px 0;
-    background-color: #e7e7e7;
+    padding: 160px 0 40px;
+    background-color: $color-bg-primary;
 
     .footer-inner {
       width: calc(100% - 40px);
@@ -351,10 +352,11 @@
       }
 
       > ul {
+        margin-bottom: 20px;
+
         li {
           margin-bottom: 7px;
         }
-        margin-bottom: 20px;
       }
 
       > p {
@@ -365,6 +367,7 @@
       .footer-bottom {
         display: flex;
         flex-direction: column-reverse;
+
         > ul {
           display: flex;
           gap: 15px;
@@ -384,7 +387,384 @@
   }
 }
 
-.app-container section {
-  min-height: 500px;
-  border: 10px solid #999;
+// ========================================
+// Common Popup
+// ========================================
+.popup-common-overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 1000px;
+  background-color: $color-overlay;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @include desktop {
+    .popup-common {
+      width: fluid-size(1000px);
+      height: fluid-size(800px);
+      margin: fluid-size(80px) auto;
+      background-color: $color-white;
+      border-radius: fluid-size(10px);
+      overflow-y: auto;
+
+      .popup-common-header {
+        position: relative;
+        width: 100%;
+        height: fluid-size(60px);
+        display: flex;
+
+        h3 {
+          width: 100%;
+          font-size: fluid-size(16px);
+          line-height: fluid-size(60px);
+          text-align: center;
+          color: $color-text-secondary;
+        }
+
+        .btn-area {
+          position: absolute;
+          right: 0;
+          width: fluid-size(60px);
+          height: fluid-size(60px);
+          cursor: pointer;
+
+          svg {
+            width: fluid-size(26px);
+            height: fluid-size(26px);
+            margin: fluid-size(17px);
+            fill: $color-text-secondary;
+            stroke: $color-text-secondary;
+            stroke-width: 1;
+          }
+        }
+      }
+
+      .popup-common-contents {
+        width: 100%;
+        height: fluid-size(740px);
+        overflow: auto;
+      }
+    }
+  }
+
+  @include mobile {
+    .popup-common {
+      width: 100%;
+      height: 100vh;
+      background-color: $color-white;
+      position: absolute;
+      top: 0;
+
+      .popup-common-header {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        border-bottom: 2px solid $color-border;
+
+        h3 {
+          width: 100%;
+          font-size: 16px;
+          line-height: 60px;
+          text-align: center;
+          color: $color-text-secondary;
+        }
+
+        .btn-area {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+
+          svg {
+            fill: $color-text-secondary;
+            stroke: $color-text-secondary;
+            stroke-width: 1;
+          }
+
+          &.close {
+            right: 0;
+
+            svg {
+              width: 26px;
+              height: 26px;
+              margin: 17px;
+            }
+          }
+
+          &.prev {
+            left: 0;
+
+            svg {
+              width: 22px;
+              height: 22px;
+              margin: 19px;
+            }
+          }
+        }
+      }
+
+      .popup-common-contents {
+        width: 100%;
+        height: calc(100vh - 60px);
+        overflow: auto;
+      }
+    }
+  }
+}
+
+// ========================================
+// Bottom Sheet (Mobile Only)
+// ========================================
+.bottom-sheet-overlay {
+  @include desktop {
+    display: none;
+  }
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: $color-overlay;
+
+    .bottom-sheet-area {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      min-height: 200px;
+      padding: 20px;
+      background-color: $color-white;
+      border-radius: 20px 20px 0 0;
+
+      .close-icon-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 26px;
+        height: 26px;
+        margin: 17px;
+        fill: $color-text-secondary;
+        stroke: $color-text-secondary;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// ========================================
+// Main Sections
+// ========================================
+.pre-auth-section,
+.auth-section {
+  @include desktop {
+    width: clamp(1024px, 100%, 1400px);
+    height: auto;
+    margin: 0 auto fluid-size(160px);
+
+    .section {
+      width: 100%;
+      height: auto;
+      display: flex;
+      gap: fluid-size(20px);
+
+      .section-left {
+        width: fluid-size(390px);
+        background-color: $color-white;
+        box-shadow: $shadow-base;
+        border-radius: fluid-size(10px);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        .info {
+          margin: fluid-size(60px) fluid-size(40px) 0;
+
+          > h3 {
+            font-size: fluid-size(28px);
+            font-weight: 600;
+            color: $color-emphasis;
+            margin-bottom: fluid-size(40px);
+          }
+
+          > p {
+            font-size: fluid-size(18px);
+            color: $color-text-secondary;
+            line-height: 1.8;
+            word-break: keep-all;
+          }
+        }
+
+        .lottie-wrapper {
+          width: fluid-size(150px);
+          height: fluid-size(150px);
+          margin: fluid-size(20px);
+        }
+      }
+
+      .section-right {
+        width: fluid-size(990px);
+        background-color: $color-white;
+        box-shadow: $shadow-base;
+        border-radius: fluid-size(10px);
+      }
+    }
+  }
+}
+
+.auth-section {
+  @include desktop {
+    .section {
+      .section-left {
+        height: 650px;
+
+        .info {
+          span {
+            font-size: 21px;
+            font-weight: 600;
+            color: $color-text-emphasis;
+          }
+        }
+      }
+
+      .section-right {
+        box-shadow: none;
+        background-color: transparent;
+        height: auto;
+      }
+    }
+  }
+
+  @include mobile {
+  }
+}
+
+// ========================================
+// Full Width Section (고객센터)
+// ========================================
+.pre-auth-full-width-section {
+  @include desktop {
+    width: 100%;
+    height: auto;
+    padding: fluid-size(80px) 0;
+    background-color: $color-emphasis;
+
+    .full-width-section-inner {
+      width: clamp(1024px, 100%, 1400px);
+      height: auto;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      > h3 {
+        font-size: fluid-size(28px);
+        font-weight: 600;
+        color: $color-white;
+        text-align: center;
+        margin-bottom: fluid-size(20px);
+      }
+
+      > p {
+        font-size: fluid-size(21px);
+        color: $color-white;
+        text-align: center;
+        line-height: 1.8;
+        margin-bottom: fluid-size(60px);
+      }
+    }
+  }
+}
+
+// 고객센터 정보 리스트
+ul.support-info-list {
+  display: flex;
+  gap: fluid-size(120px);
+  padding: fluid-size(30px) fluid-size(160px);
+  background-color: $color-white;
+  border-radius: fluid-size(75px);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: fluid-size(30px);
+
+    .icon-area {
+      width: fluid-size(90px);
+      height: fluid-size(90px);
+      padding: fluid-size(20px);
+      background-color: $color-secondary;
+      border-radius: fluid-size(10px);
+
+      svg {
+        width: fluid-size(50px);
+        height: fluid-size(50px);
+        fill: $color-emphasis;
+      }
+    }
+
+    .info-area {
+      * {
+        margin: 0;
+        color: $color-text-primary;
+        text-align: left;
+        line-height: 1;
+      }
+
+      span {
+        color: $color-text-light;
+      }
+
+      > h3 {
+        font-weight: 600;
+        font-size: fluid-size(24px);
+        margin-bottom: fluid-size(15px);
+      }
+
+      > p {
+        font-size: fluid-size(21px);
+      }
+    }
+  }
+}
+
+// ========================================
+// Help Page
+// ========================================
+.help-link-area {
+  @include desktop {
+    padding: fluid-size(40px) 0;
+    background-color: transparent;
+
+    .full-width-section-inner {
+      h3,
+      p {
+        color: $color-text-primary;
+      }
+    }
+  }
+}
+
+.help-footer {
+  @include desktop {
+    width: 100%;
+    height: auto;
+    margin: fluid-size(160px) auto fluid-size(200px);
+
+    img {
+      width: fluid-size(200px);
+      display: block;
+      margin: auto;
+    }
+  }
 }

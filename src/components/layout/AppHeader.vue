@@ -1,10 +1,12 @@
+<!-- src/components/layout/AppHeader.vue -->
+
 <template>
   <header class="main-header">
     <div v-if="!isHelpPage" class="header-inner">
       <img src="@/assets/images/logo/test_bank_logo.png" alt="logo" />
 
       <!-- 로그인 전 -->
-      <nav v-if="true">
+      <nav v-if="isPreAuthPage">
         <ul v-if="isDesktop()">
           <li v-for="(menu, index) in menus" :key="index" :class="{ active: activeIndex === index }" @click="scrollToSection(index)">
             {{ menu }}
@@ -13,7 +15,7 @@
       </nav>
 
       <!-- 로그인 후 -->
-      <ul class="auth-btn-list" v-if="false">
+      <ul class="auth-btn-list" v-if="isListPage">
         <li>
           <button class="logout-btn">로그아웃</button>
         </li>
@@ -53,4 +55,7 @@ const { activeIndex, scrollToSection } = useScrollNavigation();
 
 const route = useRoute();
 const isHelpPage = computed(() => route.path === "/help");
+// 테스트용 분기. 추후 로그인 유무로 가드
+const isPreAuthPage = computed(() => route.path === "/");
+const isListPage = computed(() => route.path === "/list");
 </script>

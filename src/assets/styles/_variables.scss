@@ -1,20 +1,20 @@
 // ========================================
 // 컬러
 // ========================================
+
 $color-emphasis: #33cccc;
-$color-primary: #667eea;
-$color-secondary: #764ba2;
-$color-danger: #f5576c;
-$color-success: #4caf50;
-$color-warning: #ff9800;
+$color-secondary: #ebf7f8;
 
 $color-text-primary: #333;
 $color-text-secondary: #666;
 $color-text-light: #999;
+$color-text-emphasis: #21adad;
 
 $color-bg-primary: #e7e7e7;
 $color-bg-secondary: #f5f5f5;
 $color-border: #ddd;
+$color-white: #ffffff;
+$color-overlay: #00000077;
 
 // ========================================
 // 타이포그래피
@@ -50,7 +50,7 @@ $border-radius-md: 8px;
 $border-radius-lg: 12px;
 $border-radius-full: 50%;
 
-$shadow-base: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-base: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 // ========================================
 // 트랜지션
@@ -63,7 +63,7 @@ $transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 // ========================================
 // Z-Index
 // ========================================
-$z-index-dropdown: 1000;
+$z-index-header: 1000;
 $z-index-modal: 2000;
 $z-index-tooltip: 3000;
-$z-index-dev-tool: 9999;
+$z-index-dev-tool: 10000;

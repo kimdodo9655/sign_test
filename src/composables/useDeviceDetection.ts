@@ -37,6 +37,8 @@ const detectRealDevice = (): DeviceType => {
     const userAgent = navigator.userAgent.toLowerCase();
     const mobileKeywords = ["android", "iphone", "ipad", "ipod", "blackberry", "windows phone", "mobile"];
 
+    // console.log("test ---", userAgent);
+
     return mobileKeywords.some((keyword) => userAgent.includes(keyword)) ? "mobile" : "desktop";
   } catch (error) {
     console.warn("Device detection failed, defaulting to desktop:", error);

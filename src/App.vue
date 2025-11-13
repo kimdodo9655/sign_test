@@ -1,44 +1,30 @@
 <!-- src/App.vue -->
 <template>
-  <div class="container">
-    <div class="sidebar" style="background-color: aqua">390px</div>
-    <div class="main" style="background-color: aqua">990px</div>
-  </div>
-
   <div class="app-root" :data-device="deviceType">
-    <PreAuthView />
+    <AppHeader />
 
-    <!-- <router-link to="/">
-      <button class="nav-button">Root</button>
-    </router-link>
-    <router-link to="/about">
-      <button class="nav-button">About</button>
-    </router-link>
-    <router-link to="/404">
-      <button class="nav-button">404</button>
-    </router-link>
     <router-view />
-    type : {{ deviceType }} -->
+
+    <AppFooter v-if="!isHelpPage" />
 
     <DeviceTestController />
-    <DevBanner v-if="showDevBanner" />
-
-    <AppFooter />
   </div>
+
+  <DevBanner v-if="showDevBanner && false" />
 </template>
 
 <script setup lang="ts">
 import DevBanner from "@/components/layout/DevBanner.vue";
 import { env } from "@/utils/env";
 import axios from "axios";
-import { ref, onMounted, provide } from "vue";
-
+import { ref, onMounted, provide, computed } from "vue";
+import { useRoute } from "vue-router";
+import AppHeader from "@/components/layout/AppHeader.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
 import { useDeviceDetection } from "./composables/useDeviceDetection";
 import DeviceTestController from "./components/dev/DeviceTestController.vue";
-
-import PreAuthView from "@/views/PreAuthView.vue";
-
-import AppFooter from "@/components/layout/AppFooter.vue";
+const route = useRoute();
+const isHelpPage = computed(() => route.path === "/help");
 
 // ✅ 디바이스 감지 전역 제공
 const deviceDetection = useDeviceDetection();
@@ -78,166 +64,3 @@ onMounted(() => {
   checkApiConnection();
 });
 </script>
-<style lang="scss" scoped>
-// _functions.scss
-
-@use "sass:math";
-
-/* ***********************************
- * FLUID SIZE FUNCTION
- * 반응형 크기 계산 - 타이포그래피, 간격, 레이아웃용
- * *********************************** */
-
-/**
- * 지정된 뷰포트 범위 내에서 비례적으로 크기가 변하는 값을 생성합니다.
- * 
- * @param {Number} $max-size - 최대 뷰포트에서의 크기 (단위 포함)
- * @param {Number} $min-viewport - 최소 뷰포트 너비 (기본값: 1024px)
- * @param {Number} $max-viewport - 최대 뷰포트 너비 (기본값: 1400px)
- * @return {String} - clamp() 함수로 계산된 반응형 크기
- * 
- * @example
- *   font-size: fluid-size(48px);
- *   // 결과: clamp(35.14px, 3.43vw, 48px)
- *   // 1024px: 35.14px
- *   // 1200px: ~41px
- *   // 1400px: 48px
- * 
- * @example
- *   width: fluid-size(1400px);
- *   padding: fluid-size(80px);
- *   gap: fluid-size(20px);
- */
-@function fluid-size($max-size, $min-viewport: 1024px, $max-viewport: 1400px) {
-  // 최소 크기 계산 (비례)
-  $min-size: $max-size * math.div($min-viewport, $max-viewport);
-
-  // vw 값 계산
-  $vw-value: math.div($max-size, $max-viewport) * 100;
-
-  // clamp()로 최소값, 선호값, 최대값 설정
-  @return clamp(#{$min-size}, #{$vw-value}vw, #{$max-size});
-}
-
-/* ***********************************
- * HELPER FUNCTIONS (선택적)
- * *********************************** */
-
-/**
- * 두 값의 비율을 퍼센트로 계산합니다.
- * Grid 또는 Flex에서 비율 기반 레이아웃을 만들 때 유용합니다.
- * 
- * @param {Number} $part - 부분 값
- * @param {Number} $whole - 전체 값
- * @return {Percentage} - 계산된 비율 (%)
- * 
- * @example
- *   width: calculate-ratio(390px, 1400px);
- *   // 결과: 27.857%
- */
-@function calculate-ratio($part, $whole) {
-  @return math.div($part, $whole) * 100%;
-}
-
-/**
- * px 값을 rem으로 변환합니다.
- * 
- * @param {Number} $px - 픽셀 값
- * @param {Number} $base - 기본 폰트 크기 (기본값: 16px)
- * @return {Number} - rem 값
- * 
- * @example
- *   font-size: px-to-rem(24px);
- *   // 결과: 1.5rem
- */
-@function px-to-rem($px, $base: 16px) {
-  @return math.div($px, $base) * 1rem;
-}
-
-/**
- * rem 값을 px로 변환합니다.
- * 
- * @param {Number} $rem - rem 값
- * @param {Number} $base - 기본 폰트 크기 (기본값: 16px)
- * @return {Number} - px 값
- * 
- * @example
- *   width: rem-to-px(2rem);
- *   // 결과: 32px
- */
-@function rem-to-px($rem, $base: 16px) {
-  $value: math.div($rem, 1rem);
-  @return $value * $base;
-}
-
-/* ***********************************
- * USAGE EXAMPLES
- * *********************************** */
-
-/*
-// 1. 타이포그래피
-h1 {
-  font-size: fluid-size(56px);
-}
-
-h2 {
-  font-size: fluid-size(40px);
-}
-
-p {
-  font-size: fluid-size(18px);
-}
-
-// 2. 간격 (Spacing)
-.section {
-  padding: fluid-size(120px) 0;
-  margin-bottom: fluid-size(80px);
-}
-
-.card {
-  gap: fluid-size(32px);
-  padding: fluid-size(40px);
-}
-
-// 3. 레이아웃
-.container {
-  width: fluid-size(1400px);
-  margin: 0 auto;
-}
-
-.grid-container {
-  width: fluid-size(1400px);
-  display: grid;
-  grid-template-columns: 390fr 990fr;  // 비율 유지
-  gap: fluid-size(20px);
-}
-
-// 4. 비율 계산 헬퍼
-.sidebar {
-  width: calculate-ratio(390px, 1400px);  // 27.857%
-}
-
-.main {
-  width: calculate-ratio(990px, 1400px);  // 70.714%
-}
-
-// 5. 단위 변환
-.text {
-  font-size: px-to-rem(18px);  // 1.125rem
-  margin-bottom: px-to-rem(24px);  // 1.5rem
-}
-*/
-
-.container {
-  width: fluid-size(1400px);
-  margin: 0 auto;
-
-  /* 🎯 최고의 방법: Grid */
-  display: grid;
-  grid-template-columns: 390fr 990fr;
-  gap: fluid-size(20px);
-
-  /* 또는 실제 비율 계산 */
-  // grid-template-columns: 27.857% 70.714%;  // (20px gap은 별도)
-}
-</style>

@@ -46,7 +46,7 @@ const isDevelopment = import.meta.env.DEV;
             <div class="info__row">
               <span class="info__label">Mac 여부:</span>
               <span class="info__value" :class="isMac() ? 'info__value--mac' : 'info__value--not-mac'">
-                {{ isMac() ? "🍎 Mac" : "🪟/Windows/Linux" }}
+                {{ isMac() ? "🍎 Mac" : "🪟 Windows/Linux" }}
               </span>
             </div>
           </div>
@@ -64,6 +64,48 @@ const isDevelopment = import.meta.env.DEV;
               <span class="btn__text">리셋</span>
             </button>
           </div>
+
+          <div class="nav-section">
+            <div class="nav-section__title">빠른 이동</div>
+            <div class="nav-buttons">
+              <router-link to="/" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">🚪</span>
+                  <span class="nav-button__text">Root - pre-auth</span>
+                </button>
+              </router-link>
+              <router-link to="/list" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">📋</span>
+                  <span class="nav-button__text">Root - auth</span>
+                </button>
+              </router-link>
+              <router-link to="/help" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">❓</span>
+                  <span class="nav-button__text">[PC] Help</span>
+                </button>
+              </router-link>
+              <router-link to="/404" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">👻</span>
+                  <span class="nav-button__text">Auto Logout</span>
+                </button>
+              </router-link>
+              <router-link to="/404" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">🍎</span>
+                  <span class="nav-button__text">[PC] Not Available on macOS</span>
+                </button>
+              </router-link>
+              <router-link to="/404" class="nav-link">
+                <button class="nav-button">
+                  <span class="nav-button__icon">⚠️</span>
+                  <span class="nav-button__text">404</span>
+                </button>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -79,6 +121,13 @@ $fab-size-desktop: 56px;
 $fab-size-mobile: 48px;
 $panel-width-desktop: 280px;
 $panel-width-mobile: 260px;
+
+$color-emphasis: #33cccc;
+$color-primary: #667eea;
+$color-secondary: #764ba2;
+$color-danger: #f5576c;
+$color-success: #4caf50;
+$color-warning: #ff9800;
 
 .dev-tool {
   position: fixed;
@@ -285,6 +334,7 @@ $panel-width-mobile: 260px;
 .buttons {
   display: flex;
   gap: $spacing-pc-xs;
+  margin-bottom: $spacing-pc-md;
 
   @include mobile {
     flex-direction: column;
@@ -329,6 +379,75 @@ $panel-width-mobile: 260px;
     &:hover {
       box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
     }
+  }
+}
+
+// Navigation section styles
+.nav-section {
+  padding-top: $spacing-pc-md;
+  border-top: 1px solid $color-border;
+
+  &__title {
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  text-decoration: none;
+  display: block;
+  transition: transform $transition-base $transition-timing;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &:active {
+    transform: translateX(2px);
+  }
+}
+
+.nav-button {
+  @include button-base;
+  @include flex-center;
+  width: 100%;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  justify-content: flex-start;
+  background: $color-bg-secondary;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
+  transition: all $transition-base $transition-timing;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba($color-primary, 0.1) 0%, rgba($color-secondary, 0.1) 100%);
+    border-color: $color-primary;
+    box-shadow: 0 2px 8px rgba($color-primary, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &__icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  &__text {
+    font-weight: 500;
   }
 }
 

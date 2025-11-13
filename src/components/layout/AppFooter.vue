@@ -1,3 +1,5 @@
+<!-- src/components/layout/AppFooter.vue -->
+
 <template>
   <footer class="main-footer">
     <div class="footer-inner">

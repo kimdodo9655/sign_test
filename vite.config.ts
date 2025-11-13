@@ -11,9 +11,22 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       vue(),
       svgLoader({
-        // ⚙️ SVG 파일 내 fill/stroke 제거해서 CSS 제어 가능하게
+        defaultImport: "component",
         svgoConfig: {
-          plugins: [{ name: "removeAttrs", params: { attrs: "(fill|stroke)" } }],
+          plugins: [
+            {
+              name: "preset-default",
+              params: {
+                overrides: {
+                  // viewBox 유지 (중요!)
+                  removeViewBox: false,
+                },
+              },
+            },
+            // ✅ fill/stroke 제거 활성화 - CSS로 색상 변경 가능
+            { name: "removeAttrs", params: { attrs: "(fill|stroke)" } },
+          ],
+          multipass: true,
         },
       }),
     ],
@@ -26,7 +39,6 @@ export default defineConfig(({ command, mode }) => {
 
     esbuild: {
       legalComments: isBuild ? "none" : "inline",
-      // ✅ 프로덕션 빌드 시 console/debugger 제거
       drop: isProduction ? ["console", "debugger"] : [],
     },
 
@@ -34,7 +46,6 @@ export default defineConfig(({ command, mode }) => {
       port: 8201,
       open: true,
       strictPort: true,
-      // host: true, // ✅ 외부 기기 접근 허용 시 사용
     },
   };
 });
