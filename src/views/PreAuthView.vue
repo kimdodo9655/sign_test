@@ -9,7 +9,7 @@
     <SecCertification v-if="isDesktop()" />
     <SecHelpSupport v-if="isDesktop()" />
 
-    <SecMobSubNav v-if="isMobile()" class="mob-sub-nav" />
+    <SecMobSubNav v-if="isMobile()" />
   </div>
 </template>
 

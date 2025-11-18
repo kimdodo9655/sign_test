@@ -1,4 +1,5 @@
-import { ref, onMounted, onUnmounted, type Ref } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick, type Ref } from "vue";
+import { useRoute } from "vue-router";
 
 // ============================================================================
 // 상수 정의
@@ -6,7 +7,7 @@ import { ref, onMounted, onUnmounted, type Ref } from "vue";
 
 const SECTION_IDS = ["section1", "section2", "section3", "section4", "section5", "section6"] as const;
 const SCROLL_BOTTOM_TOLERANCE = 10;
-const CLICK_OVERRIDE_DURATION = 1000; // 800 → 1000ms로 증가
+const CLICK_OVERRIDE_DURATION = 1000;
 
 // ============================================================================
 // 타입 정의
@@ -22,11 +23,13 @@ interface UseScrollNavigationReturn {
 // ============================================================================
 
 export function useScrollNavigation(): UseScrollNavigationReturn {
+  const route = useRoute();
   const activeIndex = ref<number>(0);
   let isClickScrolling = false;
   let clickOverrideTimer: ReturnType<typeof setTimeout> | null = null;
   let lastScrollTime = 0;
-  let lastActiveIndex = 0; // ✅ 추가: 이전 인덱스 추적
+  let lastActiveIndex = 0;
+  let isListenersActive = false; // ✅ 추가: 리스너 활성화 상태 추적
 
   // --------------------------------------------------------------------------
   // 헤더 높이 계산
@@ -45,6 +48,7 @@ export function useScrollNavigation(): UseScrollNavigationReturn {
   let headerHeight = computeHeaderHeight();
 
   const handleResize = () => {
+    if (route.path !== "/") return;
     headerHeight = computeHeaderHeight();
   };
 
@@ -53,6 +57,8 @@ export function useScrollNavigation(): UseScrollNavigationReturn {
   // --------------------------------------------------------------------------
 
   const scrollToSection = (index: number): void => {
+    if (route.path !== "/") return;
+
     const id = SECTION_IDS[index];
     const el = document.getElementById(id);
     if (!el) {
@@ -92,6 +98,8 @@ export function useScrollNavigation(): UseScrollNavigationReturn {
   // --------------------------------------------------------------------------
 
   const handleScroll = (): void => {
+    if (route.path !== "/") return;
+
     // 클릭 후 일정 시간 동안은 자동 감지 무시
     const timeSinceClick = Date.now() - lastScrollTime;
     if (isClickScrolling && timeSinceClick < CLICK_OVERRIDE_DURATION) {
@@ -164,39 +172,107 @@ export function useScrollNavigation(): UseScrollNavigationReturn {
   };
 
   // --------------------------------------------------------------------------
+  // 이벤트 리스너 설정 및 제거 함수
+  // --------------------------------------------------------------------------
+
+  const waitForSections = async (maxAttempts = 20, interval = 100): Promise<boolean> => {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      let allExist = true;
+
+      for (const id of SECTION_IDS) {
+        if (!document.getElementById(id)) {
+          allExist = false;
+          break;
+        }
+      }
+
+      if (allExist) {
+        console.log(`✅ 모든 섹션 로드 완료 (시도 ${attempt + 1}/${maxAttempts})`);
+        return true;
+      }
+
+      // 다음 시도 전 대기
+      await new Promise((resolve) => setTimeout(resolve, interval));
+    }
+
+    console.error(`❌ 섹션 로드 실패 (${maxAttempts}회 시도)`);
+    return false;
+  };
+
+  const setupListeners = async (): Promise<void> => {
+    if (isListenersActive) return;
+
+    // ✅ 1단계: Vue의 DOM 렌더링 완료 대기
+    await nextTick();
+
+    // ✅ 2단계: 실제 섹션 요소들이 DOM에 추가될 때까지 대기
+    const sectionsReady = await waitForSections();
+
+    if (!sectionsReady) {
+      console.error("❌ 섹션을 찾을 수 없어 이벤트 리스너 등록을 중단합니다.");
+      return;
+    }
+
+    console.log("✅ 이벤트 리스너 등록");
+    headerHeight = computeHeaderHeight();
+
+    // 초기 위치 확인
+    setTimeout(() => {
+      handleScroll();
+    }, 100);
+
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    isListenersActive = true;
+  };
+
+  const removeListeners = (): void => {
+    if (!isListenersActive) return;
+
+    console.log("🧹 이벤트 리스너 제거");
+    window.removeEventListener("scroll", throttledScroll);
+    window.removeEventListener("resize", handleResize);
+    isListenersActive = false;
+
+    // 상태 초기화
+    activeIndex.value = 0;
+    lastActiveIndex = 0;
+    isClickScrolling = false;
+
+    if (clickOverrideTimer) {
+      clearTimeout(clickOverrideTimer);
+      clickOverrideTimer = null;
+    }
+  };
+
+  // --------------------------------------------------------------------------
   // 라이프사이클
   // --------------------------------------------------------------------------
 
   onMounted(() => {
-    headerHeight = computeHeaderHeight();
-
-    // ✅ 섹션 존재 여부 확인 (디버깅용)
-    let allSectionsExist = true;
-    SECTION_IDS.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) {
-        console.error(`❌ ${id} 섹션을 찾을 수 없습니다!`);
-        allSectionsExist = false;
-      }
-    });
-
-    if (allSectionsExist) {
-      // ✅ 초기 위치 확인 (새로고침 시에도 정확한 위치)
-      setTimeout(() => {
-        handleScroll();
-      }, 100);
-    }
-
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
+    console.log("🔍 onMounted - 현재 경로:", route.path);
   });
 
+  // ✅ 핵심: route.path 변경 감지 (DOM 렌더링 완료 후 실행) (DOM 렌더링 완료 후 실행)
+  watch(
+    () => route.path,
+    async (newPath, oldPath) => {
+      console.log(`🔄 라우트 변경: ${oldPath} → ${newPath}`);
+
+      if (newPath === "/") {
+        // ✅ 홈페이지 진입 시 DOM 렌더링 대기 후 이벤트 리스너 등록
+        await setupListeners();
+      } else {
+        // 다른 페이지로 이동 시 이벤트 리스너 제거
+        removeListeners();
+      }
+    },
+    { immediate: true } // ✅ 중요: 초기 마운트 시에도 실행
+  );
+
   onUnmounted(() => {
-    window.removeEventListener("scroll", throttledScroll);
-    window.removeEventListener("resize", handleResize);
-    if (clickOverrideTimer) {
-      clearTimeout(clickOverrideTimer);
-    }
+    console.log("🗑️ onUnmounted");
+    removeListeners();
   });
 
   return {

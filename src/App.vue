@@ -1,6 +1,8 @@
 <!-- src/App.vue -->
 <template>
-  <div class="app-root" :data-device="deviceType">
+  <TestScroll />
+
+  <div v-if="false" class="app-root" :data-device="deviceType">
     <AppHeader />
 
     <router-view />
@@ -23,6 +25,7 @@ import AppHeader from "@/components/layout/AppHeader.vue";
 import AppFooter from "@/components/layout/AppFooter.vue";
 import { useDeviceDetection } from "./composables/useDeviceDetection";
 import DeviceTestController from "./components/dev/DeviceTestController.vue";
+import TestScroll from "@/components/dev/TestScroll.vue";
 const route = useRoute();
 const isHelpPage = computed(() => route.path === "/help");
 

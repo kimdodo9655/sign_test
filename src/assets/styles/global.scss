@@ -393,11 +393,13 @@
 .popup-common-overlay {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
   min-height: 1000px;
   background-color: $color-overlay;
   animation: fadeIn 0.3s ease;
+  z-index: $z-index-modal;
 
   @keyframes fadeIn {
     from {
@@ -601,7 +603,6 @@
             font-size: fluid-size(18px);
             color: $color-text-secondary;
             line-height: 1.8;
-            word-break: keep-all;
           }
         }
 
@@ -617,6 +618,61 @@
         background-color: $color-white;
         box-shadow: $shadow-base;
         border-radius: fluid-size(10px);
+
+        * {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    width: 100%;
+    height: auto;
+    margin: 0 0 60px 0;
+
+    .section {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+
+      .section-left {
+        width: 100%;
+        padding: 40px 30px 30px 30px;
+        background-color: $color-white;
+        box-shadow: $shadow-base;
+        border-top: 2px solid $color-border;
+        border-radius: 0 0 25px 25px;
+        margin-bottom: 20px;
+
+        .info {
+          > h3 {
+            font-size: 21px;
+            font-weight: 600;
+            color: $color-emphasis;
+            margin-bottom: 20px;
+          }
+
+          > p {
+            font-size: 12px;
+            color: $color-text-secondary;
+            line-height: 1.8;
+          }
+        }
+      }
+
+      .section-right {
+        width: calc(100% - 20px);
+        margin: 0 10px 20px;
+        padding: 25px 20px;
+        background-color: $color-white;
+        box-shadow: $shadow-base;
+        border-radius: 10px;
+
+        * {
+          display: none;
+        }
       }
     }
   }
@@ -626,11 +682,11 @@
   @include desktop {
     .section {
       .section-left {
-        height: 650px;
+        height: fluid-size(650px);
 
         .info {
           span {
-            font-size: 21px;
+            font-size: fluid-size(21px);
             font-weight: 600;
             color: $color-text-emphasis;
           }
@@ -765,6 +821,89 @@ ul.support-info-list {
       width: fluid-size(200px);
       display: block;
       margin: auto;
+    }
+  }
+}
+
+.mob-sub-nav {
+  @include mobile {
+    width: 100%;
+    height: auto;
+    background-color: $color-white;
+    padding: 60px 0;
+    border-radius: 25px 25px 0 0;
+    box-shadow: $shadow-base;
+
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 28px;
+
+      span {
+        font-size: 21px;
+        font-weight: 900;
+        color: $color-emphasis;
+      }
+      margin-bottom: 50px;
+    }
+
+    ul {
+      width: calc(100% - 40px);
+      margin: 0 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      li {
+        width: 50%;
+
+        button {
+          width: 100%;
+          padding: 25px 15px;
+          border: 2px solid $color-border;
+          border-radius: 25px;
+
+          h4 {
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+          }
+
+          p {
+            text-align: left;
+            font-size: 11px;
+            line-height: 16px;
+          }
+
+          &.btn_01 {
+            margin-bottom: 10px;
+            color: $color-white;
+            border-color: $color-emphasis;
+            background-color: $color-emphasis;
+
+            h4 {
+              margin-top: 15px;
+            }
+          }
+          &.btn_02 {
+            border-color: $color-text-emphasis;
+            color: $color-text-emphasis;
+            h4 {
+              margin-top: 20px;
+            }
+          }
+          &.btn_03 {
+            border-color: $color-emphasis;
+            color: $color-emphasis;
+
+            p {
+              margin-bottom: 40px;
+            }
+          }
+        }
+      }
     }
   }
 }

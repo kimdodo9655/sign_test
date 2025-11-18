@@ -43,6 +43,7 @@ export default defineConfig(({ command, mode }) => {
     },
 
     server: {
+      host: true, // 또는 host: "0.0.0.0"
       port: 8201,
       open: true,
       strictPort: true,

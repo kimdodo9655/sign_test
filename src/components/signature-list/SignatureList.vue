@@ -22,19 +22,71 @@
             <div class="list-head">
               <div class="icon-area"></div>
               <div class="text-area">
-                <h3></h3>
-                <p><span></span></p>
-                <p><span></span></p>
-                <p><span></span></p>
-                <p><span></span></p>
+                <h3>서명요청</h3>
+                <p>
+                  금융기관 :
+                  <span>주식회사뱅클은행</span>
+                </p>
+                <p>
+                  대출예정일자 :
+                  <span>2025-06-25</span>
+                </p>
+                <p>
+                  채무자 :
+                  <span>김뱅클</span>
+                </p>
+                <p>
+                  채권최고액 :
+                  <span>200,000,000원</span>
+                </p>
               </div>
-              <div class="btn-area"></div>
+              <div class="btn-area">
+                <button>상세정보 보기</button>
+                <button>전자문서 보기</button>
+              </div>
             </div>
-            <div class="list-body"></div>
+            <div class="list-body">
+              <div class="bg-area"></div>
+              <ul class="list-info-area">
+                <li>
+                  <h4>담보 부동산 주소</h4>
+                  <p>서울특별시 용산구 회나무로 32, 101동 102호(이태원동, 뱅클아파트)</p>
+                </li>
+                <li>
+                  <h4>진행 등기유형</h4>
+                  <ul>
+                    <li>
+                      <h4></h4>
+                      <p></p>
+                    </li>
+                    <li>
+                      <h4></h4>
+                      <p></p>
+                    </li>
+                    <li>
+                      <h4></h4>
+                      <p></p>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>서명 대상 전자문서</h4>
+                  <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>서명완료일시</h4>
+                  <p>미완료</p>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li></li>
-          <li></li>
-          <li></li>
         </ul>
       </div>
     </article>

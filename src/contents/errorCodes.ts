@@ -205,7 +205,7 @@ export type ApiCode = ErrorCode | SuccessCode;
  * 코드가 에러 코드인지 확인
  */
 export const isErrorCode = (code: string): code is ErrorCode => {
-  const allErrorCodes = Object.values(ERROR_CODES).flatMap((category) => (typeof category === "string" ? [category] : Object.values(category)));
+  const allErrorCodes = Object.values(ERROR_CODES).flatMap((category) => (typeof category === "string" ? [category] : Object.values(category))) as string[];
   return allErrorCodes.includes(code);
 };
 
@@ -213,7 +213,7 @@ export const isErrorCode = (code: string): code is ErrorCode => {
  * 코드가 성공 코드인지 확인
  */
 export const isSuccessCode = (code: string): code is SuccessCode => {
-  const allSuccessCodes = Object.values(SUCCESS_CODES).flatMap((category) => (typeof category === "string" ? [category] : Object.values(category)));
+  const allSuccessCodes = Object.values(SUCCESS_CODES).flatMap((category) => (typeof category === "string" ? [category] : Object.values(category))) as string[];
   return allSuccessCodes.includes(code);
 };
 

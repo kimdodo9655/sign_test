@@ -15,6 +15,7 @@
   box-sizing: border-box;
   border: 0;
   outline: 0;
+  word-break: keep-all;
   @include font-regular;
 }
 
