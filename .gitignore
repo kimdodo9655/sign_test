@@ -33,6 +33,8 @@ build/
 
 # 운영체제 자동 생성 파일
 .DS_Store      # macOS
+**/.DS_Store
+
 Thumbs.db      # Windows
 
 # 테스트 커버리지 리포트
